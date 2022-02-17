@@ -52,11 +52,18 @@ class BankAccount{
         
         return new BankAccount(obj.accNo,obj.accBalance,obj.accHolderName);
     }
+    public BankAccount getStatement(){
+    
+        System.out.println("The account type is : "+this.getClass().getSimpleName());
+        return this;
+
+    }
 
     @Override
     public String toString() {
+        
        
-        return "BankAccount [accBalance=" + accBalance + ", accHolderName=" + accHolderName + ", accNo=" + accNo + "]";
+        return "[accBalance=" + accBalance + ", accHolderName=" + accHolderName + ", accNo=" + accNo + "]";
     }
 
     
@@ -66,6 +73,9 @@ class BankAccount{
 }
 class SavingsAccount extends BankAccount{
     static double rateOfInterest=10;
+    public SavingsAccount(){
+
+    }
 
     
 
@@ -85,6 +95,21 @@ class SavingsAccount extends BankAccount{
         return getComputedInterest(1);  
 
     }
+    public SavingsAccount getStatement(){
+    
+        System.out.println("The account type is : "+this.getClass().getSimpleName());
+        return this;
+
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "SavingsAccount" + super.toString();
+    }
+    
+
     
 
 
@@ -93,6 +118,10 @@ class SavingsAccount extends BankAccount{
 }
  class CurrentAccount extends BankAccount{
      int avgDailyTransaction;
+     public CurrentAccount(){
+
+     }
+
 
     public CurrentAccount(int avgDailyTransaction) {
         this.avgDailyTransaction = avgDailyTransaction;
@@ -123,20 +152,26 @@ class SavingsAccount extends BankAccount{
          return getTotalTransactionAmount(365);
 
      }
+     public CurrentAccount getStatement(){
+    
+        System.out.println("The account type is : "+this.getClass().getSimpleName());
+        return this;
+
+    }
 
 
      
 
     @Override
     public String toString() {
-        return super.toString() + "CurrentAccount [avgDailyTransaction=" + avgDailyTransaction + "]";
+        return "CurrentAccount"+super.toString()+" avgDailyTransaction=" + avgDailyTransaction + "]";
     }
 
 }
 
 public class BankDetails{
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         int n=sc.nextInt();
         BankAccount[] bankAcc=new BankAccount[n];
         SavingsAccount[] savingsAcc=new SavingsAccount[n];
@@ -164,10 +199,17 @@ public class BankDetails{
              };
 
 
-        }
+        }*/
+        BankAccount bankAccount = new BankAccount();
+        SavingsAccount savingsAccount = new SavingsAccount();
+        CurrentAccount currentAccount = new CurrentAccount();
+        System.out.println(bankAccount.getStatement());
+        System.out.println(savingsAccount.getStatement());
+        System.out.println(currentAccount.getStatement());
+
 
       
-        System.out.println(bankAcc[0]);
+        /*System.out.println(bankAcc[0]);
         System.out.println("Yearly interst : "+savingsAcc[0].getYearlyInterest());
         System.out.println("Computed interest  :"+savingsAcc[0].getComputedInterest(4));
         System.out.println("Yearly transaction: "+currentAcc[0].getYearlyTransaction());
@@ -176,7 +218,7 @@ public class BankDetails{
         System.out.println("Yearly Tax: "+salaryAcc[0].getYearlyTax());
         System.out.println("Copy of bank Acc: "+bankAcc[0].Copy(bankAcc[0]));
         System.out.println("Copy of savings acc: "+bankAcc[0].Copy(savingsAcc[0]));
-        System.out.println("Copy of current acc: "+bankAcc[0].Copy(currentAcc[0]));
+        System.out.println("Copy of current acc: "+bankAcc[0].Copy(currentAcc[0]));*/
         
         
         

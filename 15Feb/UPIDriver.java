@@ -2,9 +2,7 @@ class Address{
     Location location;
     String state;
     String country;
-    public Address(){
-
-    }
+    
 
     public Address(Location location, String state, String country) {
         this.location = location;
@@ -33,8 +31,7 @@ class UPIPaymentApps implements Cloneable {
     double maxDailyAmount;
     Address headOfficeLocation;
 
-    public UPIPaymentApps() {
-    }
+    
 
     public UPIPaymentApps(String name, String country, int dailyLimit, double maxDailyAmount,
             Address headOfficeLocation) {
@@ -75,10 +72,10 @@ public class UPIDriver {
         System.out.println(Paytm);
         Paytm.headOfficeLocation.location.city="Bhopal";
         Paytm.headOfficeLocation.state="Madhya Pradesh";
-        System.out.println(bhim.headOfficeLocation.location.city);
-        System.out.println(Paytm.headOfficeLocation.location.city);
-        System.out.println(bhim.headOfficeLocation.state);
-        System.out.println(Paytm.headOfficeLocation.state);
+        System.out.println("city of bhim object: "+bhim.headOfficeLocation.location.city);
+        System.out.println("city of paytm object: "+Paytm.headOfficeLocation.location.city);
+        System.out.println("state of bhim obj: "+bhim.headOfficeLocation.state);
+        System.out.println("state of paytm object : "+Paytm.headOfficeLocation.state);
         
     }
 }
