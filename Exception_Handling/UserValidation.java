@@ -1,5 +1,11 @@
+package Exception_Handling;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Scanner;
+import java.util.Date;
 class PhoneNumber {
      String countryCode;
      String phNo;
@@ -28,17 +34,25 @@ private String password;
 private String firstName;
 private String lastName;
 private PhoneNumber[] phoneNumber;
+Date dateOfBirth;
 User(){
 
 }
-public User(String email, String password, String firstName, String lastName, PhoneNumber[] phoneNumber) {
+public User(String email, String password, String firstName, String lastName, PhoneNumber[] phoneNumber,Date dateOfBirth) {
     this.email = email;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;
+    this.dateOfBirth = dateOfBirth;
 }
 
+public Date getDateOfBirth() {
+    return dateOfBirth;
+}
+public void setDateOfBirth(Date dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+}
 public String getEmail() {
     return email;
 }
@@ -82,6 +96,7 @@ class InvalidInputException extends Exception {
     }
 }
 class Validate {
+    private static int month;
     public static void validate(User user) throws InvalidInputException {
         if(!(onlyAlphabets(user.getFirstName())&& onlyAlphabets(user.getLastName()))){
             throw new InvalidInputException("First name and Last name must contain only alphabets");
@@ -99,7 +114,30 @@ class Validate {
             throw new InvalidInputException("Phone no must contain only digits and it should be 10 charcaters long");
     
         }
+        if(!dateVerification(user.getDateOfBirth())){
+            throw new InvalidInputException("Invalid date");
+
+        }
+        
     
+    }
+    public static boolean dateVerification(Date dateOfBirth){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateOfBirth);
+        String dayNames[] = new DateFormatSymbols().getWeekdays();  
+        String weekday=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+        int month = cal.get(Calendar.MONTH);
+        int date=cal.get(Calendar.DATE);
+        int year=cal.get(Calendar.YEAR);
+        
+        
+        if((month>=1 && month<=12)&&(date>=1 && date<=31)&&(year>=1900 && year<=2009)){
+            System.out.println("DOB is: "+year+"-"+month+"-"+date+" "+weekday);
+            return true;
+        }
+        return false;
+
+        
     }
     public static boolean phoneVerification(PhoneNumber[] phone){
         for(int j=0;j<phone.length;j++){
@@ -160,17 +198,19 @@ class Validate {
 }
 public class UserValidation{
    
-    public static void main(String[] args)throws InvalidInputException{
+    public static void main(String[] args) throws ParseException{
         Scanner scanner = new Scanner(System.in);
-        String email="istatgmail.com";
+        String email="istat@gmail.com";
         String password="hijk2fgjh";
         String firstName="Preeti";
         String lastName="Kumari";
         PhoneNumber p1=new PhoneNumber("+91","5678990879");
         PhoneNumber p2=new PhoneNumber("+91","9878990790");
         PhoneNumber[]phoneNumber={p1,p2};
+        String s="12-03-2000";
+        Date date=new SimpleDateFormat("dd-MM-yyyy").parse(s);
 
-User user=new User(email,password,firstName,lastName,phoneNumber);
+User user=new User(email,password,firstName,lastName,phoneNumber,date);
 
 try{
     Validate.validate(user);
@@ -184,10 +224,9 @@ for(int i=0;i<phoneNumber.length;i++){
 System.out.println(indianphone[0]);
    
 }
-catch(IllegalArgumentException e){
+catch(InvalidInputException e){
     System.out.println(e);
 }
-
 
 
 

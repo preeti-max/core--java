@@ -6,12 +6,7 @@ import java.io.*;
 
 public class Warning {
     static boolean hasWarning(int creditHrs,double gpa){
-        if((creditHrs<30 && gpa<1.5)||(creditHrs<60 && gpa<1.75)||(gpa<2.0)){
-            return true;
-
-        }
-        return false;
-        
+        return(creditHrs<30 && gpa<1.5)||(creditHrs<60 && gpa<1.75)||(gpa<2.0);
 
     }
     
