@@ -19,24 +19,25 @@ class DisplayTable {
                 Thread.currentThread().getName());
     }
 }
+
 class TestSynchronizedBlock extends Thread {
     DisplayTable table;
 
     TestSynchronizedBlock(DisplayTable table) {
         this.table = table;
     }
-public class SynchronizedBlockDemo {
-    public static void main(String[] args){
-        DisplayTable table = new DisplayTable();
 
-        TestSynchronizedBlock thread1 = new TestSynchronizedBlock(table);
-        TestSynchronizedBlock thread2 = new TestSynchronizedBlock(table);
-        TestSynchronizedBlock thread3 = new TestSynchronizedBlock(table);
+    class SynchronizedBlockDemo {
+        public static void main(String[] args) {
+            DisplayTable table = new DisplayTable();
 
-        thread1.start();
-        thread2.start();
-        thread3.start();
+            TestSynchronizedBlock thread1 = new TestSynchronizedBlock(table);
+            TestSynchronizedBlock thread2 = new TestSynchronizedBlock(table);
+            TestSynchronizedBlock thread3 = new TestSynchronizedBlock(table);
+
+            thread1.start();
+            thread2.start();
+            thread3.start();
+        }
     }
 }
-}
-
