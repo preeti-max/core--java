@@ -1,49 +1,42 @@
 package StringOperations;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Tfidf {
-    public static String punctuationRemoval(String content){
+    public static String punctuationRemoval(String content) {
 
-        return content.replaceAll("[~!@#$%^&*()_+{}\\[\\]:;,.<>/?-]","");
-
+        return content.replaceAll("[~!@#$%^&*()_+{}\\[\\]:;,.<>/?-]", "");
 
     }
-    
-    public static String[] removeStopWord(String content){
-        String stopwords[]={"i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "you’re", "you’ve", "you’ll", "you’d", "your", "yours", "yourself", "yourselves", "he", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "then", "too", "very", "s", "t", "can", "will", "just", "don", "don’t", "should", "should’ve", "now", "d", "ll", "m", "o", "re", "ve", "y", "ain", "aren’t", "could", "couldn’t", "didn’t", "didn’t"};
-        String modified[]=content.split(" ");
-        String[] ans;
-        int count = 0;
-        for (int i = 0; i < modified.length; i++) {
-            for (String str : stopwords) {
-                if (modified[i].equals(str)) {
-                    count++;
+
+    public static String[] removeStopWord(String content) {
+        String stopwords[] = { "i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "you’re", "you’ve",
+                "you’ll", "you’d", "your", "yours", "yourself", "yourselves", "he", "most", "other", "some", "such",
+                "no", "nor", "not", "only", "own", "same", "so", "then", "too", "very", "s", "t", "can", "will", "just",
+                "don", "don’t", "should", "should’ve", "now", "d", "ll", "m", "o", "re", "ve", "y", "ain", "aren’t",
+                "could", "couldn’t", "didn’t", "didn’t" };
+        String modified[] = content.split(" ");
+
+        List<String> a = new ArrayList<String>(Arrays.asList(modified));
+        for (int i = 0; i < a.size(); i++) {
+            for (String s : stopwords) {
+                if (a.get(i).equals(s)) {
+                    a.remove(i);
                 }
             }
         }
-        ans = new String[(modified.length - count)];
-        int j = 0;
-        for (int i = 0; i < modified.length; i++) {
-            boolean flag = true;
-            for (String str : stopwords) {
-                if (modified[i].equals(str)) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) {
-                ans[j] = modified[i];
-                j++;
-            }
-        }
-        return ans;
+        String[] b = a.toArray(new String[a.size()]);
+        return b;
+
     }
+
     public static String[] getUniqueWords(String[][] content) {
         HashSet<String> set = new HashSet<>();
         for (String[] file : content) {
@@ -100,35 +93,33 @@ public class Tfidf {
             }
         }
     }
+
     public static void printMatrix(double[][] matrix, String[] uniqueWords) {
-        System.out.print("Document ");
+        System.out.print("Document :");
         for (String word : uniqueWords)
-            System.out.print(word + " ");
+            System.out.print(word + "  ");
         System.out.println();
         for (int i = 0; i < matrix.length; i++) {
-            System.out.print("file" + (i + 1) + "   | ");
+            System.out.print("file" + (i + 1) + "  : ");
             for (int j = 0; j < matrix[0].length; j++) {
-                System.out.printf("%.3f", matrix[i][j]);
+                System.out.printf("%.3f ", matrix[i][j]);
             }
             System.out.println();
         }
     }
-    
 
     public static void main(String[] args) {
-        String files[]={"file1.txt","file2.txt","file3.txt","file4.txt"};
-        String content[][]=new String[files.length][];
-        for(int i=0;i<files.length;i++){
+        String files[] = { "file1.txt", "file2.txt", "file3.txt", "file4.txt" };
+        String content[][] = new String[files.length][];
+        for (int i = 0; i < files.length; i++) {
             try (Scanner sc = new Scanner(new File(files[i]))) {
-                while(sc.hasNext()) {
-                    String s=sc.nextLine();
-                    s=punctuationRemoval(s).toLowerCase();
-                    content[i]=removeStopWord(s);
+                while (sc.hasNext()) {
+                    String s = sc.nextLine();
+                    s = punctuationRemoval(s).toLowerCase();
+                    content[i] = removeStopWord(s);
 
-                    
                 }
-            }
-            catch(FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 System.out.println(e);
             }
         }
@@ -136,16 +127,13 @@ public class Tfidf {
 
         double[][] matrix = new double[content.length][unique.length];
 
-        tf(matrix,unique,content);
+        tf(matrix, unique, content);
         double[] idf = idf(content, unique);
 
         tfidf(matrix, idf);
         System.out.println("TF-IDF MATRIX");
         printMatrix(matrix, unique);
 
-        
-       
-        
     }
-    
+
 }
