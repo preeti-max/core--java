@@ -1,9 +1,6 @@
 package Collections;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.HashMap;
 
 class Book {
     int id;
@@ -24,9 +21,7 @@ class Book {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((author == null) ? 0 : author.hashCode());
         result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -39,19 +34,13 @@ class Book {
         if (getClass() != obj.getClass())
             return false;
         Book other = (Book) obj;
-        if (author == null) {
-            if (other.author != null)
-                return false;
-        } else if (!author.equals(other.author))
-            return false;
         if (id != other.id)
             return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
         return true;
+    }
+
+    public int compareTo(Book b) {
+        return this.id - b.id;
     }
 
     @Override
@@ -69,42 +58,28 @@ public class BookDriver {
         Book b2 = new Book(233, "Operating System", "Galvin", "Wiley", 6);
         Book b3 = new Book(101, "Data Communications & Networking", "Forouzan", "Mc Graw Hill", 4);
         Book b4 = new Book(121, "Let us C", "Yashwant Kanetkar", "Mc Graw Hill", 11);
-        List<Book> library = new ArrayList<>();
-        Set<Book> set = new HashSet<>();
 
-        library.add(b1);
-        library.add(b2);
-        library.add(b3);
-        library.add(b4);
-        for (int i = 0; i < library.size() - 1; i++) {
-            Book a = library.get(i);
-            for (int j = i + 1; j < library.size(); j++) {
-                if (a.equals(library.get(j))) {
-                    set.add(a);
-                }
+        HashMap<Integer, Book> books = new HashMap<>();
 
-            }
-        }
-        System.out.println("NO of duplicates found: " + set.size());
-        set.forEach(b -> System.out.println(
-                "Duplicate books: +Book id: " + b.id + " Book name: " + b.name + " Book author:" + b.author));
+        books.put(b1.id, b1);
+        books.put(b2.id, b2);
+        books.put(b3.id, b3);
+        books.put(b4.id, b4);
 
-        Book maxBook = null;
+        books.values().stream().forEach(System.out::println);
+        books.values().stream().forEach(i -> i.quantity *= 2
 
-        ArrayList<Book> library2 = new ArrayList<>(library);
-        library2.removeAll(set);
-        int max = Integer.MIN_VALUE;
-        for (Book b : library2) {
+        );
 
-            if (b.quantity > max) {
-                max = b.quantity;
-                maxBook = b;
+        System.out.println("After doubling");
+        books.values().stream().forEach(System.out::println);
+        books.merge(233, books.get(233), (oldvalue, newvalue) -> { // merge method
+            newvalue.publisher += " USA";
+            return newvalue;
+        });
 
-            }
-
-        }
-        System.out.println("Details of book with max quantity");
-        System.out.println(maxBook);
+        System.out.println("After merging");
+        books.values().stream().forEach(System.out::println);
 
     }
 
