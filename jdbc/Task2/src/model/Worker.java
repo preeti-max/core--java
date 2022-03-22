@@ -11,8 +11,17 @@ public class Worker {
     private String department;
     private String email;
 
-    public Worker(int worker_id) {
+    public Worker(int worker_id, String first_name, String email) {
         this.worker_id = worker_id;
+        this.first_name = first_name;
+        this.email = email;
+    }
+
+    public Worker(int worker_id, String first_name, Date joining_date, String email) {
+        this.worker_id = worker_id;
+        this.first_name = first_name;
+        this.joining_date = joining_date;
+        this.email = email;
     }
 
     public Worker(int worker_id, String first_name, String last_name, int salary, Date joining_date, String department,

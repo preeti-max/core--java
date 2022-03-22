@@ -23,5 +23,6 @@
     "activityBar.background": "#4B1F2B",
     "titleBar.activeBackground": "#692C3D",
     "titleBar.activeForeground": "#FEFCFC"
-  }
+  },
+  "java.project.sourcePaths": ["11Feb", "designpattern"]
 }
